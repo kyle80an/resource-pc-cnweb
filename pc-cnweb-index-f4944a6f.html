@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世界杯 · 杂志专题 · 深度回顾</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: #f7f4ef;
+      color: #1e1e1e;
+      line-height: 1.7;
+    }
+
+    /* ===== 深色头图 – 杂志横幅 ===== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 85vh;
+      min-height: 480px;
+      background: linear-gradient(145deg, #0b1a1f 0%, #1b2e35 45%, #0f242c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 40%, rgba(200, 170, 100, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #c7b085;
+      border: 1px solid rgba(199, 176, 133, 0.3);
+      padding: 0.3rem 1.2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+      backdrop-filter: blur(2px);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
+      font-weight: 600;
+      color: #efe7d8;
+      letter-spacing: 6px;
+      line-height: 1.15;
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .hero h1 span {
+      color: #dbbc7b;
+      font-weight: 700;
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: 1.15rem;
+      color: #b8ada0;
+      font-weight: 300;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding-top: 1.2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-sub i {
+      font-style: normal;
+      background: rgba(219, 188, 123, 0.12);
+      padding: 0 8px;
+    }
+
+    /* ===== 浅色正文区 ===== */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.8rem;
+    }
+
+    .main-content {
+      padding: 4rem 0 3rem 0;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: #1f2f35;
+      position: relative;
+      margin-bottom: 1.8rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid #dbbc7b;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 50%;
+      height: 2px;
+      background: #a08050;
+    }
+
+    .intro-block {
+      margin-bottom: 3.2rem;
+    }
+
+    .intro-block p {
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+      color: #2c2c2c;
+    }
+
+    .intro-block p strong {
+      color: #1f4a4f;
+      font-weight: 600;
+    }
+
+    .highlight-link {
+      color: #9b7b4a;
+      text-decoration: none;
+      border-bottom: 1px dashed #9b7b4a;
+      transition: border 0.2s, color 0.2s;
+      font-weight: 500;
+      padding: 0 2px;
+    }
+
+    .highlight-link:hover {
+      color: #6f5a34;
+      border-bottom-style: solid;
+      background: rgba(155, 123, 74, 0.06);
+    }
+
+    /* 卡片式特点陈列 */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.8rem;
+      margin: 2.5rem 0 3rem 0;
+    }
+
+    .feature-card {
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      border-radius: 20px;
+      padding: 1.6rem 1.5rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.04);
+      border: 1px solid #eae3d8;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+      border-color: #dbbc7b;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #1d373c;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .feature-card .card-icon {
+      display: inline-block;
+      font-size: 1.7rem;
+      margin-bottom: 0.4rem;
+      opacity: 0.7;
+    }
+
+    .feature-card p {
+      color: #3b3b3b;
+      font-size: 0.95rem;
+    }
+
+    /* 引用/提示区块 */
+    .quote-box {
+      background: #eae2d3;
+      padding: 2rem 2.2rem;
+      border-radius: 28px;
+      margin: 2.8rem 0 3.2rem 0;
+      border-left: 6px solid #dbbc7b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .quote-box p {
+      font-size: 1.05rem;
+      color: #1f2a2a;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .quote-box .source {
+      display: block;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: #5f5a50;
+      letter-spacing: 1px;
+    }
+
+    .faq-mini {
+      margin-top: 2rem;
+    }
+
+    .faq-mini details {
+      border-bottom: 1px solid #ddd6c8;
+      padding: 0.8rem 0;
+    }
+
+    .faq-mini summary {
+      font-weight: 500;
+      color: #1d373c;
+      cursor: pointer;
+      padding: 0.2rem 0;
+      transition: color 0.15s;
+    }
+
+    .faq-mini summary:hover {
+      color: #9b7b4a;
+    }
+
+    .faq-mini details p {
+      padding: 0.6rem 0 0.2rem 0.8rem;
+      color: #3b3b3b;
+      font-size: 0.95rem;
+    }
+
+    /* ===== 页尾 ===== */
+    .page-footer {
+      background: #1b2a2e;
+      color: #c2b9ab;
+      padding: 2.8rem 1.5rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .page-footer p {
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      font-weight: 300;
+    }
+
+    .page-footer .footer-link {
+      color: #dbbc7b;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(219, 188, 123, 0.4);
+      transition: border 0.2s;
+    }
+
+    .page-footer .footer-link:hover {
+      border-bottom: 1px solid #dbbc7b;
+    }
+
+    .footer-divider {
+      width: 60px;
+      height: 2px;
+      background: #4a5a5a;
+      margin: 1rem auto 1.2rem auto;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 720px) {
+      .hero {
+        height: 72vh;
+        min-height: 380px;
+      }
+      .hero h1 {
+        letter-spacing: 2px;
+      }
+      .container {
+        padding: 0 1.2rem;
+      }
+      .main-content {
+        padding: 2.5rem 0 2rem 0;
+      }
+      .feature-grid {
+        gap: 1rem;
+        grid-template-columns: 1fr;
+      }
+      .quote-box {
+        padding: 1.5rem 1.2rem;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .hero-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.8rem;
+      }
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      .hero-sub {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======= 深色头图（杂志横幅） ======= -->
+<header class="hero">
+  <div class="hero-overlay">
+    <div class="hero-tag">MAGAZINE · 专题</div>
+    <h1>世界<span>杯</span> 再发现</h1>
+    <div class="hero-sub">
+      每一次回访 · 都值得被认真收藏
+    </div>
+  </div>
+</header>
+
+<!-- ======= 浅色正文区 ======= -->
+<main class="main-content">
+  <div class="container">
+
+    <!-- 第一段：从再次访问切入 -->
+    <section class="intro-block">
+      <h2 class="section-title">再次抵达</h2>
+      <p>对于许多关注足球盛事的人来说，<strong>世界杯</strong>不只意味着四年的等待，更是一座不断叠加记忆的影像库。当你再次打开那个熟悉的页面——以“<a href="https://pc-cnweb-fifaworldcup.com" class="highlight-link">世界杯</a>”为名的站点，你看到的不仅是赛程与数据，还有上一次停留时留下的好奇与期待。从预选赛的悬念到淘汰赛的戏剧，信息流始终在更新，而你的浏览轨迹正是理解的线索。</p>
+      <p>深度球迷往往会反复查阅同一届赛事的技术统计、历史对阵与战术演变，这种回访行为本身就是一种知识梳理。网站的结构清晰，数据层叠合理，恰好为这种梳理提供了安静的环境——无需跳转，不必等待，一切围绕赛事本身展开。</p>
+    </section>
+
+    <!-- 第二段：收藏与持续关注 -->
+    <section class="intro-block">
+      <h2 class="section-title">收藏 · 持续关注</h2>
+      <p>把有价值的页面加入书签，是数字时代最朴素的知识管理方式。而针对<strong>世界杯</strong>这样跨越年份的赛事体系，持续关注的必要性更加突出：小组出线形势、球员伤病更新、裁判选派、场地适应报告……这些动态信息在赛前、赛中、赛后均有不同权重。一个值得信赖的聚合页面，胜过零散的碎片推送。</p>
+      <p>正因如此，将 <a href="https://pc-cnweb-fifaworldcup.com" class="highlight-link">世界杯</a> 设为常驻标签，等于为自己留了一扇随时可以推开的窗。窗外的内容随赛程呼吸，而你始终拥有主动权。</p>
+    </section>
+
+    <!-- 特点卡片（差异化展示） -->
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="card-icon">🏆</div>
+        <h3>赛事基因</h3>
+        <p>从预选赛到决赛日，数据节点覆盖完整周期，历史记录可回溯至前一届。</p>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">📋</div>
+        <h3>观察视角</h3>
+        <p>小组积分、实时射手榜、对阵树状图；支持多届横向比较，适合深度浏览。</p>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">🔖</div>
+        <h3>收藏惯性</h3>
+        <p>页面结构稳定，书签长期有效。无需反复搜索，打开即进入专属情报室。</p>
+      </div>
+    </div>
+
+    <!-- 第三段：承接 + 提醒（FAQ 摘要） -->
+    <section class="intro-block">
+      <h2 class="section-title">常在 · 常新</h2>
+      <p>网站的吸引力往往不在于花哨的动效，而在于内容的层次感与可重访性。从赛事首页到各阶段专题，<a href="https://pc-cnweb-fifaworldcup.com" class="highlight-link">世界杯</a> 的页面布局始终围绕信息优先级展开：最新动态置顶，历史数据下沉，关键节点以视觉模块突出。对于希望系统理解赛事脉络的观众来说，这种设计本身就是一种引导。</p>
+      <p>此外，关注页面的更新节奏也很重要——有些内容在比赛日当天每小时刷新，有些则赛后沉淀为专题。将站点加入收藏夹并定期回访，是保持信息同步的简单习惯。</p>
+    </section>
+
+    <!-- 引用/提示区块（带有杂志感） -->
+    <div class="quote-box">
+      <p>「世界杯的叙事从来不是单向的。当你第二次、第三次打开同一个页面，那些曾经扫过的数字会变成故事，那些曾忽略的细节会浮现意义。」</p>
+      <span class="source">—— 观赛手记 · 2026 前夕</span>
+    </div>
+
+    <!-- FAQ 摘要（简短，丰富内容层次） -->
+    <div class="faq-mini">
+      <details>
+        <summary>❓ 为什么选择反复访问同一个世界杯页面？</summary>
+        <p>赛事信息具有时效性，但同时也具有可回顾性。一个结构良好的站点能同时满足即时查询与后期复盘两种需求，减少切换平台的信息损耗。</p>
+      </details>
+      <details>
+        <summary>❓ 如何确保获取到最新的赛事变化？</summary>
+        <p>建议将 <a href="https://pc-cnweb-fifaworldcup.com" class="highlight-link">世界杯</a> 页面添加至浏览器书签栏，并在比赛日前后保持关注。页面内容会随官方信息源动态调整，无需额外订阅。</p>
+      </details>
+      <details>
+        <summary>❓ 这个站点适合哪些类型的用户？</summary>
+        <p>不仅适合狂热球迷，也适合赛事研究者、数据爱好者以及希望快速了解历届世界杯脉络的普通观众。信息密度可自行调节。</p>
+      </details>
+    </div>
+
+  </div>
+</main>
+
+<!-- ======= 页尾访问提示 ======= -->
+<footer class="page-footer">
+  <div class="container">
+    <p>杂志专题 · 深度回顾</p>
+    <div class="footer-divider"></div>
+    <p>如果你正在寻找一个可以反复回访、随时获取完整赛事信息的聚合地，<br>
+    <a href="https://pc-cnweb-fifaworldcup.com" class="footer-link">世界杯</a> 页面值得你收藏与持续关注。</p>
+    <p style="margin-top: 1.6rem; font-size: 0.8rem; opacity: 0.5;">— 每次回访，都是对足球叙事的一次重新理解 —</p>
+  </div>
+</footer>
+
+</body>
+</html>
